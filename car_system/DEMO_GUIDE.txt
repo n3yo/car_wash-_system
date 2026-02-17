@@ -1,0 +1,399 @@
+═══════════════════════════════════════════════════════════════════════════════
+                 🚗 CHISM CAR CARE - SYSTEM DEMO GUIDE
+              Sample Data Walkthrough & System Illustrations
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ SAMPLE DATA ADDED TO SYSTEM:
+────────────────────────────────────────────────────────────────────────────────
+
+CUSTOMERS (Vehicle Owners):
+  1. John Mwangi
+     Phone: 0712345678
+     Email: john@example.com
+     ID: 12345678
+     Location: Nairobi, Kenya
+     Vehicles: 2 (Camry, Civic)
+
+  2. Grace Kipchoge
+     Phone: 0723456789
+     Email: grace@example.com
+     ID: 87654321
+     Location: Mombasa, Kenya
+     Vehicles: 1 (BMW X5)
+
+
+VEHICLES (Cars):
+  1. Toyota Camry (Red, Sedan, 2020)
+     Plate: TZA-1234-ABC
+     Owner: John Mwangi
+     Status: Available
+
+  2. Honda Civic (Blue, Sedan, 2019)
+     Plate: TZA-5678-DEF
+     Owner: John Mwangi
+     Status: Available
+
+  3. BMW X5 (Black, SUV, 2021)
+     Plate: TZA-9999-XYZ
+     Owner: Grace Kipchoge
+     Status: Available
+
+
+SERVICES:
+  1. Basic Wash - 1,500 TSH (30 mins)
+     Quick exterior cleaning
+
+  2. Premium Wash - 3,000 TSH (60 mins)
+     Full interior and exterior wash
+
+  3. Engine Cleaning - 5,000 TSH (90 mins)
+     Deep engine bay cleaning
+
+
+═══════════════════════════════════════════════════════════════════════════════
+WHERE TO SEE THIS DATA IN THE SYSTEM:
+═══════════════════════════════════════════════════════════════════════════════
+
+1️⃣  ADMIN DASHBOARD: http://localhost:8000/admin/
+    ─────────────────────────────────────────────────────────────────────────
+
+    📍 LOGIN:
+        Username: admin
+        Password: admin@123
+
+    📍 WHAT YOU'LL SEE:
+        ┌─────────────────────────────────────────────────┐
+        │  🚗 Chism Car Care Administration               │
+        │  Welcome to Chism Car Care Management System    │
+        ├─────────────────────────────────────────────────┤
+        │                                                  │
+        │  Carwash                                         │
+        │  ├─ Attendants                                  │
+        │  ├─ Customers              ✨ [2 records]      │
+        │  ├─ Vehicles               ✨ [3 records]      │
+        │  ├─ ServiceTypes           ✨ [3 records]      │
+        │  ├─ ServiceRequests        ✨ [0 records]      │
+        │  ├─ Parking                ✨ [0 records]      │
+        │  └─ Payments               ✨ [0 records]      │
+        │                                                  │
+        └─────────────────────────────────────────────────┘
+
+    📍 CUSTOMER MANAGEMENT:
+        Click "Customers" to see:
+        ┌─────────────────────────────────────────────────┐
+        │ Customers List                                   │
+        ├─────────────────────────────────────────────────┤
+        │ ID │ Name              │ Phone        │ Email  │
+        │ 1  │ John Mwangi      │ 0712345678  │ john...│
+        │ 2  │ Grace Kipchoge   │ 0723456789  │ grace..│
+        └─────────────────────────────────────────────────┘
+
+        Click on "John Mwangi" to see details:
+        ┌─────────────────────────────────────────────────┐
+        │ Customer Details: John Mwangi                   │
+        ├─────────────────────────────────────────────────┤
+        │ Name: John Mwangi                              │
+        │ Phone: 0712345678                              │
+        │ Email: john@example.com                         │
+        │ ID Number: 12345678                            │
+        │ Address: Nairobi, Kenya                         │
+        │ Date Registered: Feb 17, 2026                  │
+        │ Active: Yes ✓                                  │
+        └─────────────────────────────────────────────────┘
+
+    📍 VEHICLE MANAGEMENT:
+        Click "Vehicles" to see:
+        ┌──────────────────────────────────────────────────────────┐
+        │ Vehicles List                                             │
+        ├──────────────────────────────────────────────────────────┤
+        │ Plate      │ Make  │ Model │ Year │ Color │ Owner       │
+        │ TZA-1234   │ Toyota│ Camry │ 2020 │ Red   │ John Mwangi │
+        │ TZA-5678   │ Honda │ Civic │ 2019 │ Blue  │ John Mwangi │
+        │ TZA-9999   │ BMW   │ X5    │ 2021 │ Black │ Grace...    │
+        └──────────────────────────────────────────────────────────┘
+
+        Click on "TZA-1234-ABC" to see full details:
+        ┌──────────────────────────────────┐
+        │ Vehicle: Toyota Camry            │
+        ├──────────────────────────────────┤
+        │ Plate Number: TZA-1234-ABC       │
+        │ Make: Toyota                     │
+        │ Model: Camry                     │
+        │ Year: 2020                       │
+        │ Color: Red                       │
+        │ Type: Sedan                      │
+        │ Customer: John Mwangi            │
+        │ Services Performed: 0            │
+        │ Last Service: -                  │
+        └──────────────────────────────────┘
+
+    📍 SERVICE TYPE MANAGEMENT:
+        Click "Service types" to see:
+        ┌────────────────────────────────────────────────┐
+        │ Service Types                                   │
+        ├────────────────────────────────────────────────┤
+        │ Name              │ Price   │ Duration        │
+        │ Basic Wash        │ 1500.00 │ 30 minutes     │
+        │ Premium Wash      │ 3000.00 │ 60 minutes     │
+        │ Engine Cleaning   │ 5000.00 │ 90 minutes     │
+        └────────────────────────────────────────────────┘
+
+
+2️⃣  HOME PAGE: http://localhost:8000/
+    ────────────────────────────────────────────────────────────────────────
+
+    📍 NAVIGATION:
+        ┌───────────────────────────────────────────────────┐
+        │ 🚗 Chism Car Care │ Home │ API │ Admin │ Docs   │
+        └───────────────────────────────────────────────────┘
+
+    📍 DASHBOARD:
+        Shows all 7 system modules:
+        ┌──────────────┬──────────────┬──────────────┐
+        │  👥 Customers│  🚗 Vehicles │ 🛠️ Services  │
+        │  [Manage]    │  [Manage]    │  [Manage]   │
+        └──────────────┴──────────────┴──────────────┘
+
+        Click [Manage] under Vehicles:
+        ┌─────────────────────────────────┐
+        │ Vehicles Admin                   │
+        ├─────────────────────────────────┤
+        │ ✓ TZA-1234-ABC (Toyota Camry)   │
+        │ ✓ TZA-5678-DEF (Honda Civic)    │
+        │ ✓ TZA-9999-XYZ (BMW X5)         │
+        └─────────────────────────────────┘
+
+
+3️⃣  API ENDPOINTS: http://localhost:8000/api/
+    ────────────────────────────────────────────────────────────────────────
+
+    📍 LIST ALL CUSTOMERS:
+        GET /api/customers/
+
+        Response:
+        {
+          "count": 2,
+          "next": null,
+          "results": [
+            {
+              "id": 1,
+              "name": "John Mwangi",
+              "phone": "0712345678",
+              "email": "john@example.com",
+              "id_number": "12345678",
+              "address": "Nairobi, Kenya",
+              "is_active": true
+            },
+            {
+              "id": 2,
+              "name": "Grace Kipchoge",
+              "phone": "0723456789",
+              "email": "grace@example.com",
+              "id_number": "87654321",
+              "address": "Mombasa, Kenya",
+              "is_active": true
+            }
+          ]
+        }
+
+    📍 GET SINGLE CUSTOMER:
+        GET /api/customers/1/
+
+        Response:
+        {
+          "id": 1,
+          "name": "John Mwangi",
+          "phone": "0712345678",
+          "email": "john@example.com",
+          "id_number": "12345678",
+          "address": "Nairobi, Kenya",
+          "date_registered": "2026-02-17",
+          "is_active": true
+        }
+
+    📍 GET CUSTOMER SUMMARY:
+        GET /api/customers/1/summary/
+
+        Response:
+        {
+          "id": 1,
+          "name": "John Mwangi",
+          "phone": "0712345678",
+          "vehicle_count": 2,
+          "total_services": 0,
+          "total_parking": 0,
+          "total_spent": "0.00",
+          "vehicles": [
+            {"plate_number": "TZA-1234-ABC", "make": "Toyota"},
+            {"plate_number": "TZA-5678-DEF", "make": "Honda"}
+          ]
+        }
+
+    📍 LIST ALL VEHICLES:
+        GET /api/vehicles/
+
+        Response:
+        {
+          "count": 3,
+          "results": [
+            {
+              "id": 1,
+              "plate_number": "TZA-1234-ABC",
+              "make": "Toyota",
+              "model": "Camry",
+              "year": 2020,
+              "color": "Red",
+              "vehicle_type": "sedan",
+              "customer": 1,
+              "customer_name": "John Mwangi"
+            },
+            {
+              "id": 2,
+              "plate_number": "TZA-5678-DEF",
+              "make": "Honda",
+              "model": "Civic",
+              "year": 2019,
+              "color": "Blue",
+              "vehicle_type": "sedan",
+              "customer": 1,
+              "customer_name": "John Mwangi"
+            },
+            {
+              "id": 3,
+              "plate_number": "TZA-9999-XYZ",
+              "make": "BMW",
+              "model": "X5",
+              "year": 2021,
+              "color": "Black",
+              "vehicle_type": "suv",
+              "customer": 2,
+              "customer_name": "Grace Kipchoge"
+            }
+          ]
+        }
+
+    📍 FILTER VEHICLES BY CUSTOMER:
+        GET /api/vehicles/?customer_id=1
+
+        Response:
+        Shows only vehicles owned by John Mwangi (customer 1)
+
+    📍 GET VEHICLE SERVICE HISTORY:
+        GET /api/vehicles/1/service-history/
+
+        Response:
+        {
+          "vehicle": "TZA-1234-ABC (Toyota Camry)",
+          "total_services": 0,
+          "services": []
+        }
+
+
+═══════════════════════════════════════════════════════════════════════════════
+HOW TO USE THE SYSTEM - PRACTICAL WORKFLOW:
+═══════════════════════════════════════════════════════════════════════════════
+
+SCENARIO: John Mwangi arrives with his Toyota Camry (TZA-1234-ABC) for a wash
+
+STEP 1: Admin Dashboard → Customers
+   ✓ Find John Mwangi
+   ✓ View all his details and vehicles
+
+
+STEP 2: Admin Dashboard → Vehicles
+   ✓ Find Toyota Camry (TZA-1234-ABC)
+   ✓ Customer automatically shows as John Mwangi
+
+
+STEP 3: Admin Dashboard → Service Requests
+   ✓ Create New Service Request
+   ✓ Select Vehicle: TZA-1234-ABC
+   ✓ Select Customer: John Mwangi
+   ✓ Select Service: Premium Wash (3,000 TSH)
+   ✓ Select Attendant: (e.g., James)
+   ✓ Status: Pending
+   ✓ Save
+
+
+STEP 4: Use API to Start Service
+   POST /api/service-requests/1/start-service/
+   ✓ Status changes to: In Progress
+   ✓ Start time recorded
+
+
+STEP 5: After Washing Completes
+   POST /api/service-requests/1/complete-service/
+   ✓ Status changes to: Completed
+   ✓ Completion time recorded
+
+
+STEP 6: Create Payment
+   POST /api/payments/
+   {
+     "customer": 1,
+     "amount": 3000.00,
+     "payment_method": "cash",
+     "service_request": 1
+   }
+
+
+STEP 7: Confirm Payment
+   POST /api/payments/1/confirm-payment/
+   ✓ Status: Completed
+   ✓ Revenue recorded
+
+
+STEP 8: Check Reports
+   GET /api/payments/daily-revenue/
+   ✓ Shows total earned today
+   ✓ Includes John's payment
+
+
+═══════════════════════════════════════════════════════════════════════════════
+KEY PAGES TO VISIT TO SEE SAMPLE DATA:
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Home Page:
+   http://localhost:8000/
+   - Shows creative dashboard with all modules
+
+2. Admin Dashboard:
+   http://localhost:8000/admin/
+   - Username: admin
+   - Password: admin@123
+   - View all customers (2), vehicles (3), services (3)
+
+3. API Endpoints:
+   http://localhost:8000/api/
+   - View raw data in JSON format
+   - Test different endpoints
+   - Explore filter options
+
+4. Customers List:
+   http://localhost:8000/admin/carwash/customer/
+   - See both customers with their details
+
+5. Vehicles List:
+   http://localhost:8000/admin/carwash/vehicle/
+   - See all 3 vehicles
+   - Click each to see owner info
+
+6. Services:
+   http://localhost:8000/admin/carwash/servicetype/
+   - See all 3 service types
+   - View pricing and duration
+
+═══════════════════════════════════════════════════════════════════════════════
+                              🎉 SYSTEM IS READY! 🎉
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ All sample data has been successfully added to the system
+✅ You can now manage, view, and process data through:
+   - Creative Home Page
+   - Customized Admin Dashboard  
+   - REST API Endpoints
+   - Beautiful Web Interface
+
+Start by visiting: http://localhost:8000/
+
+═══════════════════════════════════════════════════════════════════════════════

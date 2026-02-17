@@ -127,30 +127,60 @@
             font-size: 16px;
         }
 
-        .header-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
+        /* Marquee Section */
+        .marquee-container {
+            overflow: hidden;
+            background: white;
+            padding: 30px 0;
             margin-top: 30px;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
             border-radius: 10px;
-            text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .stat-box h3 {
-            font-size: 28px;
-            margin-bottom: 5px;
+        .marquee {
+            display: flex;
+            animation: marquee 20s linear infinite;
+            gap: 40px;
+            padding: 0 40px;
         }
 
-        .stat-box p {
-            font-size: 14px;
-            opacity: 0.9;
+        .marquee:hover {
+            animation-play-state: paused;
+        }
+
+        .car-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+            gap: 10px;
+        }
+
+        .car-icon {
+            font-size: 64px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .car-item:hover .car-icon {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .car-label {
+            font-size: 12px;
+            color: #667eea;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
 
         /* Main Container */
@@ -339,7 +369,6 @@
         </a>
         <ul class="nav-menu">
             <li><a href="/" class="active"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="/api/"><i class="fas fa-plug"></i> API</a></li>
             <li><a href="/admin/"><i class="fas fa-cog"></i> Admin Portal</a></li>
             <li><a href="/core.html" target="_blank"><i class="fas fa-book"></i> Documentation</a></li>
         </ul>
@@ -356,22 +385,57 @@
     <div class="header">
         <h1>🚗 Chism Car Care Management System</h1>
         <p>Professional car wash and parking management solution</p>
-        <div class="header-stats">
-            <div class="stat-box">
-                <h3>7</h3>
-                <p>Modules</p>
-            </div>
-            <div class="stat-box">
-                <h3>40+</h3>
-                <p>API Endpoints</p>
-            </div>
-            <div class="stat-box">
-                <h3>PostgreSQL</h3>
-                <p>Database</p>
-            </div>
-            <div class="stat-box">
-                <h3>100%</h3>
-                <p>Uptime</p>
+        <div class="marquee-container">
+            <div class="marquee">
+                <div class="car-item">
+                    <div class="car-icon">🚗</div>
+                    <div class="car-label">Sedan</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🚙</div>
+                    <div class="car-label">SUV</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🚕</div>
+                    <div class="car-label">Taxi</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🚓</div>
+                    <div class="car-label">Police</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🏎️</div>
+                    <div class="car-label">Sport</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🚐</div>
+                    <div class="car-label">Van</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🚛</div>
+                    <div class="car-label">Truck</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🏎️</div>
+                    <div class="car-label">Sport</div>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="car-item">
+                    <div class="car-icon">🚗</div>
+                    <div class="car-label">Sedan</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🚙</div>
+                    <div class="car-label">SUV</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🚕</div>
+                    <div class="car-label">Taxi</div>
+                </div>
+                <div class="car-item">
+                    <div class="car-icon">🚓</div>
+                    <div class="car-label">Police</div>
+                </div>
             </div>
         </div>
     </div>
@@ -388,8 +452,6 @@
                 <a href="/admin/carwash/parking/" class="link-btn">🅿️ Parking</a>
                 <a href="/admin/carwash/payment/" class="link-btn">💳 Payments</a>
                 <a href="/admin/carwash/attendant/" class="link-btn">👔 Staff</a>
-                <a href="/api/payments/daily-revenue/" class="link-btn">📊 Today's Revenue</a>
-                <a href="/api/payments/monthly-revenue/" class="link-btn">📈 Monthly Report</a>
             </div>
         </div>
 
@@ -480,17 +542,7 @@
                 </div>
             </div>
 
-            <!-- API Documentation Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">📡</div>
-                    <div class="card-title">API</div>
-                </div>
-                <div class="card-body">
-                    <p>Access REST API endpoints for mobile and web applications</p>
-                    <a href="/api/"><i class="fas fa-arrow-right"></i> API Hub</a>
-                </div>
-            </div>
+
         </div>
     </div>
 

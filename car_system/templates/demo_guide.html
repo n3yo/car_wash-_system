@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chism Car Care - System Demo Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .demo-box {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+        
+        .badge.success {
+            background: #28a745;
+        }
+        
+        .badge.info {
+            background: #17a2b8;
+        }
+        
+        .api-endpoint {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        
+        .screenshot {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-family: 'Courier New';
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .step {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #ffc107;
+            color: black;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .highlight {
+            background: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .footer {
+            background: #f0f0f0;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚗 Chism Car Care - System Demo Guide</h1>
+            <p>Complete walkthrough of sample data in all system modules</p>
+        </header>
+        
+        <div class="content">
+            <!-- Sample Data Overview -->
+            <div class="section">
+                <h2>📊 Sample Data Overview</h2>
+                
+                <h3>✅ Customers Added:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Location</th>
+                            <th>Vehicles Owned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>John Mwangi</td>
+                            <td>0712345678</td>
+                            <td>john@example.com</td>
+                            <td>Nairobi, Kenya</td>
+                            <td><span class="badge">2 vehicles</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Grace Kipchoge</td>
+                            <td>0723456789</td>
+                            <td>grace@example.com</td>
+                            <td>Mombasa, Kenya</td>
+                            <td><span class="badge">1 vehicle</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>✅ Vehicles Added:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Plate Number</th>
+                            <th>Make & Model</th>
+                            <th>Year</th>
+                            <th>Color</th>
+                            <th>Type</th>
+                            <th>Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="highlight">TZA-1234-ABC</span></td>
+                            <td>Toyota Camry</td>
+                            <td>2020</td>
+                            <td>🔴 Red</td>
+                            <td>Sedan</td>
+                            <td>John Mwangi</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">TZA-5678-DEF</span></td>
+                            <td>Honda Civic</td>
+                            <td>2019</td>
+                            <td>🔵 Blue</td>
+                            <td>Sedan</td>
+                            <td>John Mwangi</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">TZA-9999-XYZ</span></td>
+                            <td>BMW X5</td>
+                            <td>2021</td>
+                            <td>⚫ Black</td>
+                            <td>SUV</td>
+                            <td>Grace Kipchoge</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>✅ Services Available:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Basic Wash</td>
+                            <td>Quick exterior cleaning</td>
+                            <td>1,500 TSH</td>
+                            <td>30 mins</td>
+                        </tr>
+                        <tr>
+                            <td>Premium Wash</td>
+                            <td>Full interior and exterior wash</td>
+                            <td>3,000 TSH</td>
+                            <td>60 mins</td>
+                        </tr>
+                        <tr>
+                            <td>Engine Cleaning</td>
+                            <td>Deep engine bay cleaning</td>
+                            <td>5,000 TSH</td>
+                            <td>90 mins</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Home Page Demo -->
+            <div class="section">
+                <h2>🏠 1. Home Page - http://localhost:8000/</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Where to See It:</strong> When you first visit http://localhost:8000/, you see the creative homepage
+                </div>
+                
+                <p>The homepage now shows with <span class="highlight">Chism Car Care</span> branding:</p>
+                
+                <div class="screenshot">┌─────────────────────────────────────────────────┐
+│  🚗 Chism Car Care                              │
+├─────────────────────────────────────────────────┤
+│ Professional car wash and parking management    │
+│                                                  │
+│ 7 Modules | 40+ API | PostgreSQL | 100% Uptime │
+├─────────────────────────────────────────────────┤
+│  Quick Access                                    │
+│ [👥 Customers] [🚗 Vehicles] [🛠️ Services]     │
+│ [🅿️ Parking]   [💳 Payments]  [👔 Staff]       │
+├─────────────────────────────────────────────────┤
+│  System Modules                                  │
+│ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐│
+│ │     👥      │ │     🚗      │ │     🛠️      ││
+│ │ Customers   │ │ Vehicles    │ │ Services    ││
+│ │  [Manage]   │ │  [Manage]   │ │  [Manage]   ││
+│ └─────────────┘ └─────────────┘ └─────────────┘│
+└─────────────────────────────────────────────────┘

@@ -113,9 +113,3 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
-
-# Admin Site Customization
-from django.contrib import admin
-admin.site.site_header = "Chism Car Care Administration"
-admin.site.site_title = "Chism Car Care"
-admin.site.index_title = "Welcome to Chism Car Care Management System"
