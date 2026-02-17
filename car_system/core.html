@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Car Wash System - Core Architecture & Network Explanation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 30px;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #764ba2;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 30px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            padding: 8px 0;
+            padding-left: 20px;
+            color: #555;
+        }
+        
+        .toc li:before {
+            content: "► ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        section {
+            margin: 40px 0;
+            page-break-inside: avoid;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+        }
+        
+        .box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .box.info {
+            border-left-color: #17a2b8;
+            background: #d1ecf1;
+        }
+        
+        .box.success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .box.warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        tr:hover {
+            background: #f0f0f0;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .api-endpoint {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        .workflow {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content strong {
+            color: #667eea;
+        }
+        
+        .arrow {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.5em;
+            margin: -5px 0;
+        }
+        
+        .diagram {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border: 2px dashed #667eea;
+            margin: 20px 0;
+            text-align: center;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #667eea;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            section {
+                page-break-inside: avoid;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚗 Smart Car Wash & Parking System</h1>
+            <p class="subtitle">Complete Core Architecture & Network Explanation</p>
+            <p style="color: #999; margin-top: 10px;">February 16, 2026 | Django 4.2 + PostgreSQL + REST Framework</p>
+        </header>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>📋 Table of Contents</h2>
+            <ul>
+                <li>System Overview & Architecture</li>
+                <li>Network Layers Explained</li>
+                <li>Core Components</li>
+                <li>Data Flow & Relationships</li>
+                <li>API Endpoints</li>
+                <li>Complete Workflows</li>
+                <li>Database Schema</li>
+                <li>Technology Stack</li>
+            </ul>
+        </div>
+
+        <!-- Section 1: System Overview -->
+        <section>
+            <h2>1. System Overview & Architecture</h2>
+            
+            <p>The Smart Car Wash & Parking System is a comprehensive, enterprise-ready backend solution built with Django and PostgreSQL. It manages all aspects of a car wash business including customer management, vehicle tracking, service requests, parking operations, and payment processing.</p>
+            
+            <div class="box success">
+                <strong>✓ What It Does:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Records vehicle information (plate number, make, model, owner)</li>
+                    <li>Manages customer profiles with complete history</li>
+                    <li>Tracks car wash services with status updates</li>
+                    <li>Handles parking check-in/check-out with fee calculation</li>
+                    <li>Processes payments from multiple sources</li>
+                    <li>Generates daily and monthly revenue reports</li>
+                    <li>Tracks attendant performance metrics</li>
+                </ul>
+            </div>
+
+            <h3>Why This Architecture?</h3>
+            <p>This system uses a <strong>three-tier architecture</strong>:</p>
+            <ul style="margin-left: 20px;">
+                <li><strong>Presentation Layer:</strong> REST API (no direct UI included, ready for any frontend)</li>
+                <li><strong>Business Logic Layer:</strong> Django ViewSets, Models, Serializers</li>
+                <li><strong>Data Layer:</strong> PostgreSQL Database</li>
+            </ul>
+        </section>
+
+        <!-- Section 2: Network Layers -->
+        <section>
+            <h2>2. Network Layers Explained</h2>
+            
+            <div class="diagram">
+┌─────────────────────────────────────────────────────────────┐
+│           CLIENT LAYER (Desktop/Mobile/Web)                 │
+│    - Web Browser at http://localhost:8000                  │
+│    - Mobile Apps (Future)                                  │
+│    - Admin Dashboard                                       │
+└──────────────────────────┬──────────────────────────────────┘
+                           │ HTTP/REST Requests
+                           │ (JSON Format)
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│        REST API LAYER (/api/)                               │
+│    - 7 ViewSets (Attendant, Customer, Vehicle, etc)        │
+│    - 40+ Endpoints (CRUD + Custom Actions)                 │
+│    - Django REST Framework                                 │
+└────────────┬──────────────────────────────────────────────┬──┘
+             │                                               │
+             ▼                                               ▼
+    ┌─────────────────────┐                    ┌────────────────────┐
+    │  SERIALIZERS        │                    │  AUTHENTICATION    │
+    │  (JSON Conversion)  │                    │  (Token/Session)   │
+    │  - Validate Input   │                    │  - Permissions     │
+    │  - Format Output    │                    │  - CORS Headers    │
+    └────────┬────────────┘                    └────────────────────┘
+             │
+             ▼
+┌─────────────────────────────────────────────────────────────┐
+│        BUSINESS LOGIC LAYER (Django Models)                 │
+│    - 7 Core Models with Relationships                       │
+│    - Status Management & Workflows                          │
+│    - Custom Methods & Calculations                          │
+└────────────┬─────────────────────────────────────────────────┘
+             │ ORM Queries
+             │ (SQL Generated)
+             ▼
+┌─────────────────────────────────────────────────────────────┐
+│        DATA LAYER (PostgreSQL Database)                      │
+│    - 7 Tables with Constraints                              │
+│    - Foreign Key Relationships                              │
+│    - Transactions & ACID Compliance                         │
+└─────────────────────────────────────────────────────────────┘
+            </div>
+
+            <h3>Layer 1: Client Layer</h3>
+            <div class="box info">
+                <p><strong>Purpose:</strong> User interface for interacting with the system</p>
+                <p><strong>Components:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Web Browser (http://localhost:8000)</li>
+                    <li>Django Admin Interface (/admin/)</li>
+                    <li>Mobile Apps (Future - React Native, Flutter)</li>
+                    <li>Desktop Applications (Future)</li>
+                </ul>
+                <p><strong>Communication:</strong> HTTP requests/responses in JSON format</p>
+            </div>
+
+            <h3>Layer 2: REST API Layer</h3>
+            <div class="box info">
+                <p><strong>Purpose:</strong> Exposes business logic through standardized HTTP endpoints</p>
+                <p><strong>Components:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>7 ViewSets</strong> - One for each core model</li>
+                    <li><strong>40+ Endpoints</strong> - Standard CRUD + custom actions</li>
+                    <li><strong>Django REST Framework</strong> - Handles serialization, validation, permissions</li>
+                    <li><strong>Authentication</strong> - Token/Session based (extensible)</li>
+                    <li><strong>CORS Support</strong> - Cross-origin requests allowed</li>
+                </ul>
+            </div>
+
+            <h3>Layer 3: Business Logic Layer</h3>
+            <div class="box info">
+                <p><strong>Purpose:</strong> Contains application logic, data validation, and transformations</p>
+                <p><strong>Components:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>7 Models</strong> - Represent business entities</li>
+                    <li><strong>7 Serializers</strong> - Convert models to/from JSON</li>
+                    <li><strong>ViewSets</strong> - Implement API business logic</li>
+                    <li><strong>Admin Interface</strong> - Management tool for all entities</li>
+                </ul>
+            </div>
+
+            <h3>Layer 4: Data Layer</h3>
+            <div class="box info">
+                <p><strong>Purpose:</strong> Persistent storage of all system data</p>
+                <p><strong>Components:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>PostgreSQL Database</strong> - Relational database</li>
+                    <li><strong>7 Tables</strong> - One for each model</li>
+                    <li><strong>Relationships</strong> - Foreign keys, constraints</li>
+                    <li><strong>Transactions</strong> - ACID compliance</li>
+                    <li><strong>Indexing</strong> - Performance optimization</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 3: Core Components -->
+        <section>
+            <h2>3. Core Components Deep Dive</h2>
+            
+            <h3>3.1 The 7 Core Models</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Purpose</th>
+                        <th>Key Fields</th>
+                        <th>Relationships</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Attendant</strong></td>
+                        <td>Staff/Employees</td>
+                        <td>name, phone, email, id_number, hire_date</td>
+                        <td>1:M → ServiceRequest, Parking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Customer</strong></td>
+                        <td>Vehicle Owners</td>
+                        <td>name, phone, email, id_number, address</td>
+                        <td>1:M → Vehicle, ServiceRequest, Parking, Payment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vehicle</strong></td>
+                        <td>Car Information</td>
+                        <td>plate_number, make, model, year, color, type</td>
+                        <td>M:1 → Customer, 1:M → ServiceRequest, Parking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ServiceType</strong></td>
+                        <td>Available Services</td>
+                        <td>name, description, base_price, estimated_time</td>
+                        <td>1:M → ServiceRequest</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ServiceRequest</strong></td>
+                        <td>Service Orders</td>
+                        <td>vehicle, customer, service_type, attendant, status</td>
+                        <td>M:1 → Customer/Vehicle/ServiceType/Attendant, 1:1 → Payment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Parking</strong></td>
+                        <td>Parking Records</td>
+                        <td>vehicle, customer, check_in, check_out, parking_fee</td>
+                        <td>M:1 → Customer/Vehicle/Attendant, 1:1 → Payment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payment</strong></td>
+                        <td>Payment Records</td>
+                        <td>customer, amount, method, status, transaction_ref</td>
+                        <td>M:1 → Customer, 1:1 → ServiceRequest/Parking (optional)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>3.2 ViewSets - The API Controllers</h3>
+            <p>Each model has a corresponding ViewSet that provides REST endpoints:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>ViewSet</th>
+                        <th>Standard Endpoints</th>
+                        <th>Custom Endpoints</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AttendantViewSet</td>
+                        <td>List, Create, Get, Update, Delete</td>
+                        <td>/performance/ - Stats</td>
+                    </tr>
+                    <tr>
+                        <td>CustomerViewSet</td>
+                        <td>List, Create, Get, Update, Delete</td>
+                        <td>/summary/ - Customer history</td>
+                    </tr>
+                    <tr>
+                        <td>VehicleViewSet</td>
+                        <td>List, Create, Get, Update, Delete</td>
+                        <td>/service-history/ - Services</td>
+                    </tr>
+                    <tr>
+                        <td>ServiceTypeViewSet</td>
+                        <td>List, Create</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>ServiceRequestViewSet</td>
+                        <td>List, Create, Get, Update, Delete</td>
+                        <td>/pending/, /start-service/, /complete-service/</td>
+                    </tr>
+                    <tr>
+                        <td>ParkingViewSet</td>
+                        <td>List, Create, Get, Update, Delete</td>
+                        <td>/active/, /check-out/, /duration-stats/</td>
+                    </tr>
+                    <tr>
+                        <td>PaymentViewSet</td>
+                        <td>List, Create, Get, Update, Delete</td>
+                        <td>/confirm-payment/, /daily-revenue/, /monthly-revenue/</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>3.3 Serializers - Data Conversion</h3>
+            <p>Serializers transform model instances to/from JSON:</p>
+            <ul style="margin-left: 20px;">
+                <li><strong>Input Validation:</strong> Check constraints, data types, relationships</li>
+                <li><strong>Output Formatting:</strong> Include related names, nested objects</li>
+                <li><strong>RelatedField Methods:</strong> Show related object names instead of just IDs</li>
+                <li><strong>Read-only Fields:</strong> Timestamps, computed values</li>
+            </ul>
+        </section>
+
+        <!-- Section 4: Data Flow -->
+        <section>
+            <h2>4. Data Flow - How It All Works Together</h2>
+            
+            <h3>Example: Creating a Service Request</h3>
+            <div class="workflow">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <strong>Client Sends Request</strong><br/>
+                        POST /api/service-requests/<br/>
+                        Body: {vehicle: 1, customer: 1, service_type: 1, attendant: 1}
+                    </div>
+                </div>
+                
+                <div class="arrow">↓</div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <strong>Django Routing</strong><br/>
+                        URL router matches the endpoint and routes to ServiceRequestViewSet.create()
+                    </div>
+                </div>
+                
+                <div class="arrow">↓</div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <strong>Filter & Authenticate</strong><br/>
+                        Check permissions, CORS headers, authentication tokens
+                    </div>
+                </div>
+                
+                <div class="arrow">↓</div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <strong>Serializer Validation</strong><br/>
+                        ServiceRequestSerializer validates:
+                        <ul style="margin: 10px 0 0 20px;">
+                            <li>Customer exists in database</li>
+                            <li>Vehicle belongs to customer</li>
+                            <li>Service type is active</li>
+                            <li>Attendant exists</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="arrow">↓</div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <strong>Create Model Instance</strong><br/>
+                        ServiceRequest.objects.create() creates new record with:
+                        <ul style="margin: 10px 0 0 20px;">
+                            <li>status = 'pending' (default)</li>
+                            <li>request_date = NOW (auto)</li>
+                            <li>created_at = NOW (auto)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="arrow">↓</div>
+                
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <strong>ORM to SQL</strong><br/>
+                        Django ORM generates SQL:<br/>
+                        INSERT INTO service_requests (vehicle_id, customer_id, service_type_id, attendant_id, status, request_date, created_at) VALUES (1, 1, 1, 1, 'pending', NOW, NOW)
+                    </div>
+                </div>
+                
+                <div class="arrow">↓</div>
+                
+                <div class="step">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <strong>Database Execution</strong><br/>
+                        PostgreSQL executes SQL, saves record, returns auto-generated ID
+                    </div>
+                </div>
+                
+                <div class="arrow">↓</div>
+                
+                <div class="step">
+                    <div class="step-number">8</div>
+                    <div class="step-content">
+                        <strong>Response Serialization</strong><br/>
+                        ServiceRequestSerializer converts model to JSON with related names:
+                        <ul style="margin: 10px 0 0 20px;">
+                            <li>vehicle_plate: "TZA-1234-ABC"</li>
+                            <li>customer_name: "David"</li>
+                            <li>attendant_name: "John"</li>
+                            <li>service_name: "Basic Wash"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="arrow">↓</div>
+                
+                <div class="step">
+                    <div class="step-number">9</div>
+                    <div class="step-content">
+                        <strong>HTTP Response</strong><br/>
+                        Status 201 Created<br/>
+                        Body: {id: 1, vehicle: 1, vehicle_plate: "TZA-1234-ABC", customer: 1, customer_name: "David", ...}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: API Endpoints -->
+        <section>
+            <h2>5. Complete API Endpoints</h2>
+            
+            <h3>5.1 Customers API</h3>
+            <div class="api-endpoint">GET /api/customers/ - List all customers (with pagination)</div>
+            <div class="api-endpoint">POST /api/customers/ - Create new customer</div>
+            <div class="api-endpoint">GET /api/customers/{id}/ - Get customer details</div>
+            <div class="api-endpoint">PUT /api/customers/{id}/ - Update customer</div>
+            <div class="api-endpoint">DELETE /api/customers/{id}/ - Delete customer</div>
+            <div class="api-endpoint">GET /api/customers/{id}/summary/ - Get customer summary with history</div>
+
+            <h3>5.2 Vehicles API</h3>
+            <div class="api-endpoint">GET /api/vehicles/ - List all vehicles</div>
+            <div class="api-endpoint">POST /api/vehicles/ - Register new vehicle</div>
+            <div class="api-endpoint">GET /api/vehicles/{id}/ - Get vehicle details</div>
+            <div class="api-endpoint">GET /api/vehicles/?customer_id=1 - Filter vehicles by customer</div>
+            <div class="api-endpoint">GET /api/vehicles/{id}/service-history/ - Get vehicle service history</div>
+
+            <h3>5.3 Service Requests API</h3>
+            <div class="api-endpoint">GET /api/service-requests/ - List all service requests</div>
+            <div class="api-endpoint">POST /api/service-requests/ - Create new service request</div>
+            <div class="api-endpoint">GET /api/service-requests/pending/ - Get pending requests only</div>
+            <div class="api-endpoint">POST /api/service-requests/{id}/start-service/ - Change status to in_progress</div>
+            <div class="api-endpoint">POST /api/service-requests/{id}/complete-service/ - Mark as completed</div>
+
+            <h3>5.4 Parking API</h3>
+            <div class="api-endpoint">GET /api/parking/ - List all parking records</div>
+            <div class="api-endpoint">POST /api/parking/ - Create parking record (check-in)</div>
+            <div class="api-endpoint">GET /api/parking/active/ - Get currently parked vehicles</div>
+            <div class="api-endpoint">POST /api/parking/{id}/check-out/ - Check out vehicle and set fee</div>
+            <div class="api-endpoint">GET /api/parking/duration-stats/ - Get parking statistics</div>
+
+            <h3>5.5 Payments API</h3>
+            <div class="api-endpoint">GET /api/payments/ - List all payments</div>
+            <div class="api-endpoint">POST /api/payments/ - Create payment record</div>
+            <div class="api-endpoint">POST /api/payments/{id}/confirm-payment/ - Mark as completed</div>
+            <div class="api-endpoint">GET /api/payments/daily-revenue/ - Get today's revenue</div>
+            <div class="api-endpoint">GET /api/payments/monthly-revenue/ - Get monthly revenue</div>
+            <div class="api-endpoint">GET /api/payments/?status=completed&customer_id=1 - Filter payments</div>
+        </section>
+
+        <!-- Section 6: Complete Workflows -->
+        <section>
+            <h2>6. Complete Business Workflows</h2>
+            
+            <h3>Workflow 1: Complete Service Request</h3>
+            <ol style="margin-left: 40px; line-height: 2;">
+                <li><strong>Customer Arrives</strong> → Check-in vehicle (optional parking)</li>
+                <li><strong>Request Service</strong> → POST /api/service-requests/ (status: pending)</li>
+                <li><strong>Start Service</strong> → POST /api/service-requests/1/start-service/ (status: in_progress, start_time: NOW)</li>
+                <li><strong>Perform Service</strong> → Attendant washes/cleans vehicle</li>
+                <li><strong>Complete Service</strong> → POST /api/service-requests/1/complete-service/ (status: completed, completion_time: NOW)</li>
+                <li><strong>Create Payment</strong> → POST /api/payments/ (link service_request, set amount)</li>
+                <li><strong>Confirm Payment</strong> → POST /api/payments/1/confirm-payment/ (status: completed)</li>
+                <li><strong>Service Complete</strong> → Customer receives bill and leaves</li>
+            </ol>
+
+            <h3>Workflow 2: Parking Management</h3>
+            <ol style="margin-left: 40px; line-height: 2;">
+                <li><strong>Vehicle Check-in</strong> → POST /api/parking/ (status: active, check_in_time: NOW)</li>
+                <li><strong>Vehicle Parked</strong> → Time passes, vehicle stored safely</li>
+                <li><strong>Vehicle Check-out</strong> → Customer arrives to pick up</li>
+                <li><strong>Check-out Record</strong> → POST /api/parking/1/check-out/ (status: completed, check_out_time: NOW, parking_fee: CALCULATED)</li>
+                <li><strong>Create Payment</strong> → POST /api/payments/ (link parking, set amount: parking_fee)</li>
+                <li><strong>Confirm Payment</strong> → POST /api/payments/1/confirm-payment/ (status: completed)</li>
+                <li><strong>Release Vehicle</strong> → Customer leaves with vehicle</li>
+            </ol>
+
+            <h3>Workflow 3: Revenue Reporting</h3>
+            <ol style="margin-left: 40px; line-height: 2;">
+                <li><strong>Daily Report</strong> → GET /api/payments/daily-revenue/</li>
+                <li><strong>Query Database</strong> → SELECT SUM(amount) FROM payments WHERE status='completed' AND DATE(payment_date) = TODAY</li>
+                <li><strong>Return Results</strong> → {date: "2026-02-16", total_revenue: "500000.00", transactions: 10}</li>
+                <li><strong>Monthly Report</strong> → GET /api/payments/monthly-revenue/</li>
+                <li><strong>Query Database</strong> → SELECT SUM(amount) FROM payments WHERE status='completed' AND MONTH(payment_date) = CURRENT_MONTH</li>
+                <li><strong>Return Results</strong> → {month: "February 2026", total_revenue: "5000000.00", transactions: 250}</li>
+            </ol>
+        </section>
+
+        <!-- Section 7: Database Schema -->
+        <section>
+            <h2>7. Database Schema Details</h2>
+            
+            <h3>7.1 Key Relationships</h3>
+            <div class="diagram">
+ATTENDANT (1) ────────────→ (M) ServiceRequest
+   │
+   └──────────────────→ (M) Parking
+
+CUSTOMER (1) ────────────→ (M) Vehicle
+   │
+   ├──────────────────→ (M) ServiceRequest
+   │
+   ├──────────────────→ (M) Parking
+   │
+   └──────────────────→ (M) Payment
+
+VEHICLE (M) ─ belongs to ─(1) CUSTOMER
+   │
+   ├──────────────────→ (M) ServiceRequest
+   │
+   └──────────────────→ (M) Parking
+
+SERVICE_TYPE (1) ──────────→ (M) ServiceRequest
+
+ServiceRequest (1) ────────→ (1) Payment
+Parking (1) ──────────────→ (1) Payment
+            </div>
+
+            <h3>7.2 Common Query Patterns</h3>
+            <p><strong>Get Customer's Vehicles:</strong></p>
+            <div class="code-block">
+GET /api/vehicles/?customer_id=1
+Returns: List of all vehicles owned by customer 1
+            </div>
+
+            <p><strong>Get Customer's Service History:</strong></p>
+            <div class="code-block">
+GET /api/customers/1/summary/
+Returns: {
+  customer: {...},
+  vehicles_count: 3,
+  total_spent: "2500000",
+  recent_services: [...],
+  recent_parking: [...]
+}
+            </div>
+
+            <p><strong>Get All Pending Services:</strong></p>
+            <div class="code-block">
+GET /api/service-requests/pending/
+Returns: List of all service requests with status='pending'
+            </div>
+
+            <p><strong>Get Currently Parked Vehicles:</strong></p>
+            <div class="code-block">
+GET /api/parking/active/
+Returns: List of all parking records with status='active'
+            </div>
+        </section>
+
+        <!-- Section 8: Technology Stack -->
+        <section>
+            <h2>8. Technology Stack Explained</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🐍 Python 3.8+</h4>
+                    <p>Programming language - Simple, readable, powerful</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🎯 Django 4.2.8</h4>
+                    <p>Web framework - ORM, middleware, admin, security</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🔌 Django REST Framework 3.14</h4>
+                    <p>REST API framework - Serialization, viewsets, permissions</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🗄️ PostgreSQL 10+</h4>
+                    <p>Database - Relational, ACID, powerful queries</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🔗 psycopg2</h4>
+                    <p>PostgreSQL adapter - Python ↔ Database communication</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🔐 django-cors-headers</h4>
+                    <p>CORS support - Allow cross-origin requests from frontends</p>
+                </div>
+            </div>
+
+            <h3>Why This Stack?</h3>
+            <ul style="margin-left: 20px;">
+                <li><strong>Scalable:</strong> Can handle thousands of concurrent requests</li>
+                <li><strong>Secure:</strong> Built-in protection against SQL injection, XSS, CSRF</li>
+                <li><strong>Maintainable:</strong> Clean code, good documentation, large community</li>
+                <li><strong>Flexible:</strong> Easily add payment gateways, SMS, email, analytics</li>
+                <li><strong>Tested:</strong> Comprehensive test suite included</li>
+                <li><strong>Production-Ready:</strong> Used by Instagram, Spotify, Pinterest</li>
+            </ul>
+        </section>
+
+        <!-- Section 9: Security & Performance -->
+        <section>
+            <h2>9. Security & Performance Features</h2>
+            
+            <h3>Security</h3>
+            <div class="box success">
+                <ul style="margin-left: 20px;">
+                    <li><strong>SQL Injection Prevention:</strong> Django ORM parameterizes all queries</li>
+                    <li><strong>XSS Protection:</strong> Automatic escaping of user input</li>
+                    <li><strong>CSRF Protection:</strong> Token validation on all state-changing requests</li>
+                    <li><strong>Authentication:</strong> Token/Session based (extensible for OAuth2)</li>
+                    <li><strong>Authorization:</strong> Permission checking on all endpoints</li>
+                    <li><strong>CORS:</strong> Controlled cross-origin access</li>
+                    <li><strong>Data Validation:</strong> Type checking, constraint validation</li>
+                </ul>
+            </div>
+
+            <h3>Performance</h3>
+            <div class="box success">
+                <ul style="margin-left: 20px;">
+                    <li><strong>Database Indexing:</strong> Automatic indexing on primary/foreign keys</li>
+                    <li><strong>Pagination:</strong> Default pagination on list endpoints (10 per page)</li>
+                    <li><strong>Filtering & Searching:</strong> Fast queries with database where clauses</li>
+                    <li><strong>Read-only Fields:</strong> Computed fields not recalculated on every query</li>
+                    <li><strong>Connection Pooling:</strong> Database connection reuse</li>
+                    <li><strong>Query Optimization:</strong> Select_related for foreign keys</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 10: Integration Opportunities -->
+        <section>
+            <h2>10. Future Integration Points</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Integration</th>
+                        <th>Purpose</th>
+                        <th>Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>💳 <strong>Payment Gateway</strong></td>
+                        <td>Process online payments</td>
+                        <td>Stripe, Pesapal, M-Pesa, PayPal</td>
+                    </tr>
+                    <tr>
+                        <td>📱 <strong>SMS Gateway</strong></td>
+                        <td>Send notifications</td>
+                        <td>Twilio, Africa's Talking, Nexmo</td>
+                    </tr>
+                    <tr>
+                        <td>📧 <strong>Email Service</strong></td>
+                        <td>Send receipts & updates</td>
+                        <td>SendGrid, Mailgun, Gmail API</td>
+                    </tr>
+                    <tr>
+                        <td>📱 <strong>Mobile App</strong></td>
+                        <td>Customer/Staff app</td>
+                        <td>React Native, Flutter</td>
+                    </tr>
+                    <tr>
+                        <td>📊 <strong>Analytics</strong></td>
+                        <td>Business intelligence</td>
+                        <td>Google Analytics, Metabase, Tableau</td>
+                    </tr>
+                    <tr>
+                        <td>💼 <strong>Accounting</strong></td>
+                        <td>Financial reports</td>
+                        <td>Xero, QuickBooks, Wave</td>
+                    </tr>
+                    <tr>
+                        <td>🗺️ <strong>Map Service</strong></td>
+                        <td>Location tracking</td>
+                        <td>Google Maps, Mapbox</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Quick Start Instructions -->
+        <section>
+            <h2>11. Quick Start Implementation</h2>
+            
+            <h3>Windows Setup (5 minutes)</h3>
+            <div class="code-block">
+1. Double-click setup.bat
+2. Follow prompts
+3. Create superuser account
+4. Server starts automatically
+5. Visit http://localhost:8000/admin/
+            </div>
+
+            <h3>Manual Setup (All Platforms)</h3>
+            <div class="code-block">
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure database
+cp .env.example .env
+# Edit .env with your database credentials
+
+# Run migrations
+python manage.py migrate
+
+# Create admin user
+python manage.py createsuperuser
+
+# Start server
+python manage.py runserver
+
+# Access:
+# Admin: http://localhost:8000/admin/
+# API: http://localhost:8000/api/
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section style="background: #f8f9fa; padding: 30px; border-radius: 10px; border-left: 4px solid #667eea;">
+            <h2>Conclusion</h2>
+            <p>The Smart Car Wash & Parking System is a complete, enterprise-ready backend solution built with modern technologies and best practices. It provides:</p>
+            
+            <ul style="margin-left: 20px; margin-top: 20px; margin-bottom: 20px; line-height: 2;">
+                <li>✅ 7 Well-designed database models</li>
+                <li>✅ 7 ViewSets with 40+ REST API endpoints</li>
+                <li>✅ Automatic data validation and serialization</li>
+                <li>✅ Comprehensive admin interface</li>
+                <li>✅ Revenue tracking and analytics</li>
+                <li>✅ Production-ready security</li>
+                <li>✅ Scalable architecture</li>
+                <li>✅ Complete documentation</li>
+            </ul>
+
+            <p><strong>The system is ready for:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Building custom web frontends (React, Vue, Angular)</li>
+                <li>Creating mobile applications (React Native, Flutter)</li>
+                <li>Integrating with payment gateways and third-party services</li>
+                <li>Deploying to production servers</li>
+                <li>Scaling to handle high-traffic scenarios</li>
+            </ul>
+
+            <p style="margin-top: 20px; font-style: italic; color: #666;">Built for reliability, scalability, and ease of use. <strong>Your car wash business management solution is ready to run!</strong></p>
+        </section>
+
+        <div class="footer">
+            <p>🚗 Smart Car Wash & Parking System v1.0</p>
+            <p>Django 4.2.8 | PostgreSQL | REST Framework 3.14</p>
+            <p>Generated: February 16, 2026</p>
+            <p style="margin-top: 20px; color: #999;">This document can be printed or saved as PDF from your browser (Ctrl+P or Cmd+P)</p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-print on load (optional - comment out if not desired)
+        // window.print();
+    </script>
+</body>
+</html>
